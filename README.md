@@ -100,12 +100,11 @@ Os endpoints seguem a especificação OpenAPI 3.0.0 fornecida, com adições par
      - `400`: Parâmetros inválidos.
 
 ### Diagrama Arquitetural
-```
-[Usuário] --> [API Gateway] --> [Auth Service] --> [JWT Validation]
-                          --> [Consulta Service] --> [JPA/PostgreSQL]
-                          --> [Relatório Service] --> [JPA/PostgreSQL]
-                          --> [Usuário Service] --> [JPA/PostgreSQL]
-```
+A seguir, apresentamos o diagrama arquitetural que ilustra a interação entre os componentes do back-end e a camada de dados:
+
+![Diagrama Arquitetural do Sistema](imagens/diagrama-arquitetural.png)
+
+*Figura 1: Diagrama Arquitetural mostrando as camadas de Apresentação, Negócio e Dados, com serviços específicos (Consulta, Usuário, Relatório) e integração com bancos de dados.*
 
 ---
 
@@ -118,6 +117,12 @@ Os endpoints seguem a especificação OpenAPI 3.0.0 fornecida, com adições par
 - **ARIA Labels**: Uso de atributos ARIA para componentes interativos.
 
 ### Jornada do Usuário
+A jornada do usuário foi mapeada para garantir uma experiência fluida. Abaixo, o fluxograma detalha o processo de agendamento de consultas para pacientes:
+
+![Fluxograma da Jornada do Usuário](imagens/fluxograma-jornada-usuario.png)
+
+*Figura 2: Fluxograma ilustrando o processo de login, agendamento, confirmação e cancelamento de consultas pelo paciente, com verificações de disponibilidade e notificações ao médico.*
+
 1. **Paciente**:
    - Faz login com e-mail ou CPF.
    - Navega para a tela de agendamento, seleciona médico, data e hora.
@@ -187,6 +192,12 @@ Os endpoints seguem a especificação OpenAPI 3.0.0 fornecida, com adições par
 
 ### Modelo de Dados
 #### Tabelas Principais
+Abaixo, o modelo de dados detalhado com as tabelas principais e seus relacionamentos:
+
+![Modelo de Dados](imagens/modelo-de-dados.png)
+
+*Figura 3: Modelo de dados com as tabelas TB_USUARIOS, TB_CONSULTAS e TB_ESPECIALIDADES, incluindo campos e tipos de dados.*
+
 1. **TB_USUARIOS**
    - `CD_USUARIO` (PK, bigint): Identificador único.
    - `NM_NOME` (varchar): Nome completo.
@@ -210,16 +221,11 @@ Os endpoints seguem a especificação OpenAPI 3.0.0 fornecida, com adições par
    - `NM_ESPECIALIDADE` (varchar): Nome da especialidade (ex.: Cardiologia).
 
 #### Diagrama de Entidade-Relacionamento (DER)
-```
-TB_USUARIOS       TB_CONSULTAS       TB_ESPECIALIDADES
-| CD_USUARIO |<---| CD_PACIENTE |     | CD_ESPECIALIDADE |
-| NM_NOME    |    | CD_MEDICO  |---->| NM_ESPECIALIDADE |
-| DS_EMAIL   |    | DT_CONSULTA|
-| DS_SENHA   |    | HR_CONSULTA|
-| DS_CPF     |    | DS_STATUS  |
-| DS_CRM     |
-| DS_TIPO    |
-```
+A seguir, o Diagrama de Entidade-Relacionamento (DER) que ilustra as conexões entre as tabelas:
+
+![Diagrama de Entidade-Relacionamento](imagens/diagrama-entidade-relacionamento.png)
+
+*Figura 4: DER mostrando os relacionamentos entre TB_USUARIOS, TB_CONSULTAS e TB_ESPECIALIDADES.*
 
 ### Ferramentas de Modelagem
 - **dbdiagram.io**: Rascunho inicial do modelo de dados.
