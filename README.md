@@ -102,7 +102,7 @@ Os endpoints seguem a especificação OpenAPI 3.0.0 fornecida, com adições par
 ### Diagrama Arquitetural
 A seguir, apresentamos o diagrama arquitetural que ilustra a interação entre os componentes do back-end e a camada de dados:
 
-![Diagrama Arquitetural do Sistema](imagens/diagrama-arquitetural.png)
+![Diagrama Arquitetural do Sistema](2.png)
 
 *Figura 1: Diagrama Arquitetural mostrando as camadas de Apresentação, Negócio e Dados, com serviços específicos (Consulta, Usuário, Relatório) e integração com bancos de dados.*
 
@@ -119,7 +119,7 @@ A seguir, apresentamos o diagrama arquitetural que ilustra a interação entre o
 ### Jornada do Usuário
 A jornada do usuário foi mapeada para garantir uma experiência fluida. Abaixo, o fluxograma detalha o processo de agendamento de consultas para pacientes:
 
-![Fluxograma da Jornada do Usuário](imagens/fluxograma-jornada-usuario.png)
+![Fluxograma da Jornada do Usuário](1.png)
 
 *Figura 2: Fluxograma ilustrando o processo de login, agendamento, confirmação e cancelamento de consultas pelo paciente, com verificações de disponibilidade e notificações ao médico.*
 
@@ -194,7 +194,7 @@ A jornada do usuário foi mapeada para garantir uma experiência fluida. Abaixo,
 #### Tabelas Principais
 Abaixo, o modelo de dados detalhado com as tabelas principais e seus relacionamentos:
 
-![Modelo de Dados](imagens/modelo-de-dados.png)
+![Modelo de Dados](3.png)
 
 *Figura 3: Modelo de dados com as tabelas TB_USUARIOS, TB_CONSULTAS e TB_ESPECIALIDADES, incluindo campos e tipos de dados.*
 
@@ -223,7 +223,7 @@ Abaixo, o modelo de dados detalhado com as tabelas principais e seus relacioname
 #### Diagrama de Entidade-Relacionamento (DER)
 A seguir, o Diagrama de Entidade-Relacionamento (DER) que ilustra as conexões entre as tabelas:
 
-![Diagrama de Entidade-Relacionamento](imagens/diagrama-entidade-relacionamento.png)
+![Diagrama de Entidade-Relacionamento](4.png)
 
 *Figura 4: DER mostrando os relacionamentos entre TB_USUARIOS, TB_CONSULTAS e TB_ESPECIALIDADES.*
 
