@@ -17,7 +17,7 @@ Segue a versão aprimorada da seção:
 
 ### Estilo Arquitetural
 
-O sistema adota a **Arquitetura em Camadas** com uma abordagem **monolítica**, utilizando **API RESTful** para comunicação entre o front-end e o back-end.
+O sistema adota a **Arquitetura em Camadas** utilizando **API RESTful** para comunicação entre o front-end e o back-end.
 
 #### 📌 **Motivos da Escolha**
 
