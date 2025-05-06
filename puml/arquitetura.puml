@@ -1,0 +1,65 @@
+@startuml Arquitetura do Sistema Vida+ Saúde
+
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam wrapWidth 200
+skinparam dpi 150
+
+actor Usuário as U
+
+U -down-> [React.js] : Interage
+
+' Apresentação
+package "Camada de Apresentação" {
+  [React.js]
+  [Tailwind CSS]
+
+  [React.js] -down-> [Tailwind CSS] : Estilização
+
+  note right of [React.js]
+    Interface do Usuário
+  end note
+
+  note right of [Tailwind CSS]
+    Framework de Estilos
+  end note
+}
+
+[React.js] -down-> [Spring Boot] : Requisições HTTP
+
+' Negócios
+package "Camada de Lógica de Negócios" {
+  [Spring Boot]
+  [JWT Autenticação]
+
+  [Spring Boot] -down-> [JWT Autenticação] : Segurança
+
+  note right of [Spring Boot]
+    Regras de Negócio
+  end note
+
+  note right of [JWT Autenticação]
+    Autenticação com Tokens
+  end note
+}
+
+[Spring Boot] -down-> [PostgreSQL] : Consultas SQL
+
+' Dados
+package "Camada de Dados" {
+  [PostgreSQL]
+  [MongoDB Atlas]
+
+  [PostgreSQL] -down-> [MongoDB Atlas] : Logs (Opcional)
+
+  note right of [PostgreSQL]
+    Banco Relacional
+  end note
+
+  note right of [MongoDB Atlas]
+    Banco NoSQL para Logs
+  end note
+}
+
+@enduml

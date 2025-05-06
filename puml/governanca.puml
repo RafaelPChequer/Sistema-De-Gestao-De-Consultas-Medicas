@@ -1,0 +1,37 @@
+@startuml Governança do Projeto Vida+ Saúde
+
+[*] --> AF
+
+state "A Fazer" as AF
+state "Em Progresso" as EP
+state "Revisão" as RV
+state "Concluído" as CD
+
+AF --> EP : Atribuir Tarefa
+EP --> RV : Criar Pull Request
+RV --> CD : Aprovar e Merge
+RV --> EP : Rejeitar PR
+CD --> [*]
+
+note right of AF
+  - Tarefas registradas como Issues
+  - Priorização, responsável e prazo definidos
+end note
+
+note right of EP
+  - Desenvolvimento ativo
+  - Branches por funcionalidade
+  - Commits descritivos no GitHub
+end note
+
+note right of RV
+  - Revisão de código por pares
+  - Pull Requests com validação
+end note
+
+note right of CD
+  - Tarefa finalizada
+  - Merge na branch main
+end note
+
+@enduml

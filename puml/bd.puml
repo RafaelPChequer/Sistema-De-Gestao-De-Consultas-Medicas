@@ -1,0 +1,35 @@
+@startuml Diagrama ER Vida+ Saúde
+
+entity "TB_USUARIOS" {
+  * id_usuario : bigint <<PK>>
+  --
+  nm_nome : varchar
+  em_email : varchar <<unique>>
+  ds_senha : varchar
+  nr_cpf : varchar <<unique>>
+  nr_crm : varchar <<nullable>>
+  nm_especialidade : varchar <<nullable>>
+  ds_tipo : enum (PACIENTE, MEDICO, ADMIN)
+}
+
+entity "TB_CONSULTAS" {
+  * id_consulta : bigint <<PK>>
+  --
+  fk_paciente : bigint <<FK>>
+  fk_medico : bigint <<FK>>
+  dt_consulta : date
+  hr_consulta : time
+  ds_status : enum (AGENDADA, CANCELADA, CONCLUIDA)
+}
+
+entity "TB_ESPECIALIDADES" {
+  * id_especialidade : bigint <<PK>>
+  --
+  nm_especialidade : varchar
+}
+
+TB_USUARIOS ||--o{ TB_CONSULTAS : fk_paciente
+TB_USUARIOS ||--o{ TB_CONSULTAS : fk_medico
+TB_ESPECIALIDADES ||--o{ TB_USUARIOS : nm_especialidade
+
+@enduml

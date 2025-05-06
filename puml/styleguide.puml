@@ -1,0 +1,88 @@
+@startuml Style Guide Vida+ Saúde
+skinparam dpi 150
+left to right direction
+
+package "Style Guide" {
+  [Componentes UI] --> [Botões]
+  [Componentes UI] --> [Inputs]
+  [Componentes UI] --> [Cards]
+  [Componentes UI] --> [Tipografia]
+  [Componentes UI] --> [Ícones]
+}
+
+' Botões
+[Botões] --> [Primário]
+[Botões] --> [Secundário]
+[Botões] --> [Desabilitado]
+
+' Cores com verde (tema saúde)
+node "Primário\nVerde Claro\nTexto Branco" as BtnPrimario #back:90EE90
+node "Secundário\nVerde Médio\nTexto Branco" as BtnSecundario #back:32CD32
+node "Desabilitado\nVerde Suave\nTexto Cinza" as BtnDesabilitado #back:C0EFC0
+
+[Primário] --> BtnPrimario
+[Secundário] --> BtnSecundario
+[Desabilitado] --> BtnDesabilitado
+
+' Inputs
+[Inputs] --> [Text]
+[Inputs] --> [Password]
+[Inputs] --> [Email]
+[Inputs] --> [Date]
+[Inputs] --> [Select]
+
+note right of [Text]
+  Altura: 48px
+  Bordas: 8px
+end note
+
+note right of [Password]
+  Fundo Light: #FFFFFF
+  Fundo Dark: #1C1C1C
+end note
+
+' Cards
+[Cards] --> [Light Mode]
+[Cards] --> [Dark Mode]
+[Cards] --> [Propriedades]
+
+node "Light Mode\nVerde Muito Claro" as LightCard #back:E6F4EA
+node "Dark Mode\nVerde Escuro" as DarkCard #back:006400
+
+[Light Mode] --> LightCard
+[Dark Mode] --> DarkCard
+
+note right of [Propriedades]
+  Bordas: 10px
+  Padding: 16px
+end note
+
+' Tipografia
+[Tipografia] --> [Títulos]
+[Tipografia] --> [Corpo]
+[Tipografia] --> [Auxiliar]
+
+note right of [Títulos]
+  Roboto Bold (700)
+end note
+
+note right of [Corpo]
+  Roboto Medium (500)
+end note
+
+note right of [Auxiliar]
+  Roboto Regular (400)
+end note
+
+' Ícones
+note right of [Ícones]
+  Tamanho: 24px
+  Cor padrão: Verde ou Branco (Dark Mode)
+end note
+
+note bottom of [Componentes UI]
+  Tema Verde aplicado por ser símbolo de saúde, calma e confiança
+  Cores com contraste para acessibilidade (WCAG 2.1)
+end note
+
+@enduml

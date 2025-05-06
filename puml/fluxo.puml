@@ -1,0 +1,33 @@
+@startuml Fluxo de Agendamento Vida+ Saúde
+
+skinparam monochrome true
+skinparam shadowing false
+skinparam activityBackgroundColor #1E90FF
+skinparam activityBorderColor #000000
+skinparam activityFontColor #FFFFFF
+
+start
+
+:Usuário faz login;
+if (Autenticação válida?) then (sim)
+  :Acessa módulo de agendamento;
+  :Seleciona especialidade;
+  :Seleciona médico;
+
+  :Escolhe data e hora;
+  while (Horário disponível?) is (não)
+    :Exibe mensagem de horário\nindisponível;
+    :Escolhe nova data e hora;
+  endwhile (sim)
+
+  :Confirma agendamento;
+  :Sistema registra consulta;
+  :Envia confirmação ao usuário;
+  stop
+
+else (não)
+  :Exibe erro de autenticação;
+  stop
+endif
+
+@enduml
