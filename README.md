@@ -11,7 +11,7 @@ Segue a versão aprimorada da seção:
 
 ---
 
-## 🏗️ Arquitetura e Governança (Versão Detalhada)
+## 🏗️ Arquitetura e Governança
 
 ![Arquitetura do Sistema](images/arquitetura.png)
 
@@ -34,8 +34,8 @@ O sistema adota a **Arquitetura em Camadas** com uma abordagem **monolítica**, 
 ### Comparação com Outras Arquiteturas
 
 | Arquitetura                                  | Pontos Fortes                                                         | Pontos Fracos                                                                          | Motivo de Não Escolha                                         |
-| -------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| **Monólito em Camadas**                      | Simples, coeso, barato, fácil de implantar e testar                   | Escalabilidade limitada, dependências acopladas                                        | ✅ Escolhido: balanceia bem custo e requisitos                 |
+|----------------------------------------------| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **Arquitetura em Camadas**                   | Simples, coeso, barato, fácil de implantar e testar                   | Escalabilidade limitada, dependências acopladas                                        | ✅ Escolhido: balanceia bem custo e requisitos                 |
 | **Microserviços**                            | Escalabilidade granular, tolerância a falhas, deploy independente     | Complexidade elevada, sobrecarga de infraestrutura, necessidade de DevOps mais maduros | Não justifica a complexidade para um sistema de porte médio   |
 | **Serverless / FaaS**                        | Sem necessidade de infraestrutura dedicada, escalabilidade automática | Latência em chamadas, custo imprevisível em alto uso                                   | Funcionalidades não são eventos independentes; não é adequado |
 | **Event-Driven**                             | Ideal para sistemas com alta interação assíncrona                     | Complexidade de mensageria, difícil rastreabilidade                                    | O fluxo do sistema é síncrono e direto; desnecessário         |
