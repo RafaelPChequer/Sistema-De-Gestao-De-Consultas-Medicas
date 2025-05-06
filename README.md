@@ -5,47 +5,99 @@
 - Pedro Moreira
 - Rafael Chequer
 
-## 🏗️ Arquitetura e Governança
+Excelente solicitação! Vou expandir **os motivos das escolhas arquiteturais** e realizar uma **comparação mais detalhada** com outras opções, trazendo aspectos técnicos, prós e contras, e justificando a decisão de forma mais robusta.
 
-### Estilo Arquitetural
-O sistema adota a **Arquitetura em Camadas** com uma abordagem **monolítica**, utilizando **API RESTful** para comunicação entre front-end e back-end. Essa escolha é adequada para o sistema de gestão de consultas médicas da Vida+ Saúde, que possui funcionalidades bem definidas e não demanda integrações externas complexas. A arquitetura monolítica simplifica desenvolvimento, testes e implantação, enquanto o padrão em camadas garante modularidade e facilidade de manutenção.
+Segue a versão aprimorada da seção:
 
-### Padrão em Camadas
-O sistema é organizado em três camadas:
-1. **Apresentação**: Interface do usuário, desenvolvida com React.js e estilizada com Tailwind CSS.
-2. **Lógica de Negócios**: Back-end implementado com Java Spring Boot, responsável por regras de negócio e processamento de requisições.
-3. **Dados**: Banco de dados relacional PostgreSQL para persistência de dados estruturados.
+---
 
-Essa estrutura promove:
-- **Separação de responsabilidades**: Cada camada tem funções específicas, reduzindo dependências.
-- **Manutenibilidade**: Alterações em uma camada têm impacto mínimo nas demais.
-- **Simplicidade**: Ideal para um projeto de porte médio com requisitos claros.
-
-#### Diagrama de Arquitetura
+## 🏗️ Arquitetura e Governança (Versão Detalhada)
 
 ![Arquitetura do Sistema](images/arquitetura.png)
 
-### Governança do Projeto
-A governança utiliza recursos do GitHub:
-- **Commits**: Alterações documentadas com mensagens descritivas.
-- **Pull Requests**: Revisão de código antes da integração.
-- **Issues**: Registro de tarefas, bugs e melhorias.
-- **Branches**: Desenvolvimento isolado de funcionalidades em branches separadas.
+### Estilo Arquitetural
 
-#### Fluxo de Governança
+O sistema adota a **Arquitetura em Camadas** com uma abordagem **monolítica**, utilizando **API RESTful** para comunicação entre o front-end e o back-end.
 
-![Governança do Projeto](images/governanca.png)
+#### 📌 **Motivos da Escolha**
 
-### Gestão de Tarefas
-As tarefas são gerenciadas na aba **Projects** do GitHub, com um quadro **Kanban** dividido em:
-- **A Fazer**: Tarefas pendentes.
-- **Em Progresso**: Tarefas em andamento.
-- **Concluído**: Tarefas finalizadas.
+* **Simplicidade de desenvolvimento**: uma arquitetura monolítica permite que todas as partes do sistema sejam construídas e implantadas como uma única aplicação, facilitando o ciclo de vida inicial de desenvolvimento.
+* **Facilidade de testes**: como as funcionalidades estão concentradas, testes end-to-end e de integração são mais diretos.
+* **Baixa necessidade de escalabilidade granular**: o sistema da Vida+ Saúde não apresenta um volume inicial de acesso que demande escalabilidade independente de serviços, como microserviços exigiriam.
+* **Integração direta entre módulos**: a ausência de dependências externas ou integrações complexas favorece a centralização em uma única base de código.
+* **Custo operacional mais baixo**: a manutenção e hospedagem de um monólito são menos complexas e mais baratas comparadas a arquiteturas distribuídas.
 
-Cada tarefa é uma **issue** com responsável, prazo e descrição, garantindo:
-- Planejamento claro.
-- Priorização eficiente.
-- Colaboração entre a equipe.
+👉 Em suma, **para um sistema de gestão de consultas médicas com escopo moderado e requisitos funcionais bem definidos, a arquitetura monolítica atende com eficiência sem sobrecarga desnecessária.**
+
+---
+
+### Comparação com Outras Arquiteturas
+
+| Arquitetura                                  | Pontos Fortes                                                         | Pontos Fracos                                                                          | Motivo de Não Escolha                                         |
+| -------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| **Monólito em Camadas**                      | Simples, coeso, barato, fácil de implantar e testar                   | Escalabilidade limitada, dependências acopladas                                        | ✅ Escolhido: balanceia bem custo e requisitos                 |
+| **Microserviços**                            | Escalabilidade granular, tolerância a falhas, deploy independente     | Complexidade elevada, sobrecarga de infraestrutura, necessidade de DevOps mais maduros | Não justifica a complexidade para um sistema de porte médio   |
+| **Serverless / FaaS**                        | Sem necessidade de infraestrutura dedicada, escalabilidade automática | Latência em chamadas, custo imprevisível em alto uso                                   | Funcionalidades não são eventos independentes; não é adequado |
+| **Event-Driven**                             | Ideal para sistemas com alta interação assíncrona                     | Complexidade de mensageria, difícil rastreabilidade                                    | O fluxo do sistema é síncrono e direto; desnecessário         |
+| **Arquitetura Hexagonal (Ports & Adapters)** | Alto isolamento de lógica de negócios, foco em testes                 | Sobrecarga de abstração para sistemas pequenos/médios                                  | Abstração excessiva para o tamanho do projeto                 |
+
+✅ **A escolha da arquitetura monolítica em camadas se justifica pelo equilíbrio entre complexidade, manutenção e custos operacionais, além de ser mais rápida para entregar valor no curto prazo.**
+
+---
+
+### Padrão em Camadas
+
+O sistema é estruturado nas seguintes camadas:
+
+1. **Apresentação**
+
+    * Front-end em **React.js**, com **Tailwind CSS** para estilos rápidos e responsivos.
+    * Responsável por renderizar interfaces e interagir via API REST com o back-end.
+
+2. **Lógica de Negócios**
+
+    * Implementada em **Java Spring Boot**, centraliza regras de negócio, validações e autenticação com **JWT (JSON Web Tokens)**.
+    * Expondo endpoints RESTful para consumo pelo front-end.
+
+3. **Dados**
+
+    * Banco de dados **PostgreSQL** como repositório principal, garantindo integridade relacional e suporte ACID.
+    * **MongoDB Atlas (opcional)** para logs ou armazenamento de dados semi-estruturados, sem impactar o core relacional.
+
+---
+
+#### 📌 **Motivos da Escolha do Padrão em Camadas**
+
+* **Separação clara de responsabilidades**: cada camada tem um papel definido, facilitando manutenção e evolução.
+* **Baixa curva de aprendizado**: os frameworks escolhidos (React.js, Spring Boot, PostgreSQL) são amplamente documentados e conhecidos pela equipe.
+* **Escalabilidade modular (interna)**: ainda que monolítico, permite reorganizar ou otimizar partes da aplicação sem reescrever o todo.
+* **Alinhamento com a stack atual do mercado**: garante maior empregabilidade futura do projeto e facilidade de contratação.
+
+---
+
+### Comparação com Outras Abordagens de Camadas/Design Patterns
+
+| Abordagem                       | Pontos Fortes                               | Pontos Fracos                                               | Motivo de Não Escolha                                           |
+| ------------------------------- | ------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- |
+| **3 Camadas (escolhida)**       | Simples, conhecida, rápida para implementar | Menor isolamento se comparado a arquiteturas mais abstratas | ✅ Melhor custo-benefício para o escopo                          |
+| **Clean Architecture**          | Alta testabilidade, desacoplamento          | Curva de aprendizado mais longa, mais camadas de abstração  | Complexidade não necessária no momento                          |
+| **MVC (Model-View-Controller)** | Útil para frameworks web completos          | Difícil separar lógica de negócios complexa                 | Spring Boot já impõe um padrão próximo a MVC                    |
+| **CQRS + Event Sourcing**       | Excelente para leitura/escrita desacopladas | Complexidade de sincronização, necessidade de mensageria    | Sistema não exige alto volume de eventos ou queries divergentes |
+
+✅ **A arquitetura em camadas clássica oferece o nível de separação necessário sem sobrecarga de abstrações.**
+
+---
+
+### Conclusão
+
+A combinação de **Arquitetura Monolítica + Padrão em Camadas + API RESTful** foi escolhida porque:
+
+✔ **Atende plenamente os requisitos funcionais atuais** (gestão de consultas, autenticação, CRUD de usuários e médicos).
+✔ **Permite escalar progressivamente**, caso o sistema cresça no futuro, migrando gradualmente para microsserviços ou arquitetura hexagonal se necessário.
+✔ **Oferece rapidez no time-to-market**: fundamental para validar o sistema com os usuários da Vida+ Saúde.
+✔ **Minimiza custos de infraestrutura e DevOps**: ideal para ambientes com recursos moderados.
+
+👉 **Caso o sistema passe a atender múltiplas clínicas ou hospitais, ou precise de integrações complexas com sistemas externos (ex: APIs de convênios), a migração para uma arquitetura baseada em serviços será mais viável. Por ora, o monólito entrega mais valor com menor complexidade.**
 
 ---
 

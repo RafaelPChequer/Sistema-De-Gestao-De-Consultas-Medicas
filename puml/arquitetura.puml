@@ -1,4 +1,4 @@
-@startuml Arquitetura do Sistema Vida+ Saúde
+@startuml Arquitetura_Sistema_VidaMaisSaude
 
 skinparam packageStyle rectangle
 skinparam shadowing false
@@ -6,60 +6,63 @@ skinparam defaultTextAlignment center
 skinparam wrapWidth 200
 skinparam dpi 150
 
-actor Usuário as U
+actor "Usuário" as U
 
-U -down-> [React.js] : Interage
-
-' Apresentação
+' Camada de Apresentação
 package "Camada de Apresentação" {
-  [React.js]
-  [Tailwind CSS]
+    [React.js]
+    [Tailwind CSS]
 
-  [React.js] -down-> [Tailwind CSS] : Estilização
-
-  note right of [React.js]
-    Interface do Usuário
-  end note
-
-  note right of [Tailwind CSS]
-    Framework de Estilos
-  end note
+    [React.js] -down-> [Tailwind CSS] : Estilização UI
+    note right of [React.js]
+        Interface do Usuário\n(Navegador Web ou App)
+    end note
 }
 
-[React.js] -down-> [Spring Boot] : Requisições HTTP
+U -down-> [React.js] : Interage via Browser
 
-' Negócios
+' Comunicação entre Apresentação e Negócios
+[React.js] -down-> [Spring Boot API] : Requisições HTTP (REST)
+
+' Camada de Negócios
 package "Camada de Lógica de Negócios" {
-  [Spring Boot]
-  [JWT Autenticação]
+    [Spring Boot API]
+    [JWT Autenticação]
+    [Validação Regras Negócio]
 
-  [Spring Boot] -down-> [JWT Autenticação] : Segurança
+    [Spring Boot API] -down-> [JWT Autenticação] : Validação Token
+    [Spring Boot API] -down-> [Validação Regras Negócio] : Aplicação Regras
 
-  note right of [Spring Boot]
-    Regras de Negócio
-  end note
+    note right of [Spring Boot API]
+        Endpoints RESTful\nControllers & Services
+    end note
 
-  note right of [JWT Autenticação]
-    Autenticação com Tokens
-  end note
+    note right of [JWT Autenticação]
+        Autorização baseada em JWT
+    end note
+
+    note right of [Validação Regras Negócio]
+        Lógica de domínio (Consultas, Usuários, etc.)
+    end note
 }
 
-[Spring Boot] -down-> [PostgreSQL] : Consultas SQL
+' Comunicação entre Negócios e Dados
+[Spring Boot API] -down-> [PostgreSQL] : Queries SQL
 
-' Dados
+' Camada de Dados
 package "Camada de Dados" {
-  [PostgreSQL]
-  [MongoDB Atlas]
+    [PostgreSQL]
+    [MongoDB Atlas (Logs)]
 
-  [PostgreSQL] -down-> [MongoDB Atlas] : Logs (Opcional)
+    [PostgreSQL] -down-> [MongoDB Atlas (Logs)] : Exportação Logs (opcional)
 
-  note right of [PostgreSQL]
-    Banco Relacional
-  end note
+    note right of [PostgreSQL]
+        Banco de Dados Relacional\nTabelas: Usuários, Consultas, Médicos
+    end note
 
-  note right of [MongoDB Atlas]
-    Banco NoSQL para Logs
-  end note
+    note right of [MongoDB Atlas (Logs)]
+        Armazenamento Não Relacional\npara Logs e Eventos
+    end note
 }
 
 @enduml
