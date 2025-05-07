@@ -100,6 +100,94 @@ A combinação de **Arquitetura Monolítica + Padrão em Camadas + API RESTful**
 👉 **Caso o sistema passe a atender múltiplas clínicas ou hospitais, ou precise de integrações complexas com sistemas externos (ex: APIs de convênios), a migração para uma arquitetura baseada em serviços será mais viável. Por ora, o monólito entrega mais valor com menor complexidade.**
 
 ---
+## 🔐 BackEnd
+ ### Requisitos de Segurança
+ - **OAuth2**: Autenticação e autorização segura para pacientes, médicos e administradores.
+ - **HTTPS**: Garante a segurança na transmissão de dados sensíveis.
+ - **JWT**: Tokens para autenticação de sessões e validação de permissões por tipo de usuário (Paciente, Médico, Administrador).
+ - **Criptografia de Dados Sensíveis**: Senhas armazenadas com hash (ex.: bcrypt) e dados pessoais (como CPF) protegidos no banco.
+ 
+ ### Protocolo de Comunicação
+ - **API REST**: Comunicação entre front-end e back-end via HTTP, utilizando métodos padrão (GET, POST, PUT, DELETE) e respostas JSON.
+ - **Formato de Dados**: JSON para troca de dados, com validação de esquemas via OpenAPI.
+ 
+ ### Tecnologias Utilizadas
+ - **Java com Spring Boot (versão 3.x)**: Framework principal para desenvolvimento do back-end, com suporte a API REST, injeção de dependências e validação.
+ - **Spring Security**: Gerenciamento de autenticação e autorização.
+ - **JPA/Hibernate**: Comunicação com o banco de dados relacional para persistência de dados.
+ - **Lombok**: Redução de boilerplate no código Java.
+ - **Maven**: Gerenciamento de dependências e build.
+ 
+ ### Endpoints Principais (Baseado no OpenAPI fornecido)
+ Os endpoints seguem a especificação OpenAPI 3.0.0 fornecida, com adições para suportar o sistema completo:
+ 
+ 1. **/cadastro/paciente** (POST)
+    - **Descrição**: Cadastra um novo paciente.
+    - **Parâmetros**:
+      - `nome` (string, obrigatório): Nome completo do paciente.
+      - `email` (string, obrigatório): E-mail único.
+      - `senha` (string, obrigatório): Senha com validação de força.
+      - `cpf` (string, obrigatório): CPF único.
+    - **Respostas**:
+      - `201`: Paciente cadastrado com sucesso.
+      - `400`: Erro de validação (ex.: formato de e-mail inválido).
+      - `409`: Conflito (e-mail ou CPF já cadastrado).
+ 
+ 2. **/cadastro/medico** (POST)
+    - **Descrição**: Cadastra um novo médico.
+    - **Parâmetros**:
+      - `nome` (string, obrigatório): Nome completo do médico.
+      - `email` (string, obrigatório): E-mail único.
+      - `senha` (string, obrigatório): Senha com validação.
+      - `cpf` (string, obrigatório): CPF único.
+      - `crm` (string, obrigatório): CRM do médico.
+      - `especialidade` (string, obrigatório): Especialidade médica.
+    - **Respostas**:
+      - `201`: Médico cadastrado com sucesso.
+      - `400`: Erro de validação.
+      - `409`: Conflito (e-mail, CPF ou CRM já cadastrado).
+ 
+ 3. **/login** (POST)
+    - **Descrição**: Autentica um usuário (Paciente, Médico ou Administrador).
+    - **Parâmetros**:
+      - `identificador` (string, obrigatório): E-mail ou CPF.
+      - `senha` (string, obrigatório): Senha do usuário.
+    - **Respostas**:
+      - `200`: Login bem-sucedido, retorna token JWT.
+      - `401`: Credenciais inválidas.
+      - `403`: Acesso negado para o tipo de usuário.
+ 
+ 4. **/consultas/agendamento** (POST)
+    - **Descrição**: Agenda uma consulta para um paciente com um médico.
+    - **Parâmetros**:
+      - `pacienteId` (integer, obrigatório): ID do paciente.
+      - `medicoId` (integer, obrigatório): ID do médico.
+      - `data` (string, obrigatório): Data da consulta (formato ISO 8601).
+      - `hora` (string, obrigatório): Hora da consulta.
+    - **Respostas**:
+      - `201`: Consulta agendada com sucesso.
+      - `400`: Horário indisponível ou dados inválidos.
+      - `403`: Permissão insuficiente.
+ 
+ 5. **/consultas/cancelamento/{id}** (DELETE)
+    - **Descrição**: Cancela uma consulta com aviso prévio ao médico.
+    - **Parâmetros**:
+      - `id` (integer, path): ID da consulta.
+    - **Respostas**:
+      - `200`: Consulta cancelada com sucesso.
+      - `404`: Consulta não encontrada.
+      - `403`: Permissão insuficiente.
+ 
+ 6. **/relatorios/consultas** (GET)
+    - **Descrição**: Gera relatórios de consultas por período.
+    - **Parâmetros**:
+      - `dataInicio` (string, query): Data inicial (ISO 8601).
+      - `dataFim` (string, query): Data final (ISO 8601).
+    - **Respostas**:
+      - `200`: Relatório gerado com sucesso.
+      - `400`: Parâmetros inválidos.
+
+      ---
 
 ## 🎨 Style Guide
 
